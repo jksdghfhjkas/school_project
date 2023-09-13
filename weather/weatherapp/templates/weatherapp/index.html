@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'weatherapp/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'userlogin/userloginstyle.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Погодное приложение</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'registr' %}">Регистрация</a></li>
+                <li><a href="{% url 'login' %}">Войти</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% block content %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,134 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+
+}
+
+.color {
+    width: 100%;
+    height: 842px;
+    position: absolute;
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 0.221);
+}
+
+a {
+    color: white;
+}
+
+.icon {
+    position: absolute;
+    width: 50px;
+    margin-left: 10px;
+
+}
+
+header {
+    color: white;
+    z-index: 100;
+    height: 55px;
+    padding: 0 6%;
+    padding-left: 0;
+    padding-top: 5px;
+    border-bottom: 2px solid white;
+
+}
+
+header h1 {
+    color: white;
+    display: inline-block;
+    margin-left: 6%;
+}
+
+img {
+    width: 100%;
+    z-index: -2;
+    position: absolute;
+}
+
+header nav {
+    float: right;
+    margin: 5px;
+}
+
+header nav ul li {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 24px;
+}
+
+.content-one {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.228);
+    margin: 20px 6%;
+    border-radius: 7px;
+    padding: 10px 0;
+}
+
+.content-one-header {
+    color: white;
+    text-align: center;
+    font-size: 25px;
+}
+
+.content-one div {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 40px;
+}
+
+.form-one input {
+    width: 150px;
+    height: 30px;
+}
+
+.form-two input {
+    width: 300px;
+    height: 30px;
+}
+
+.form-one button,
+.form-two button {
+    width: 70px;
+    height: 30px;
+    border: 1px solid rgb(255, 170, 0);
+    border-radius: 3px;
+    color: rgb(255, 170, 0);
+    background: white;
+    font-size: 15px;
+}
+
+.form-one p,
+.form-two p {
+    color: white;
+    font-size: 20px;
+}
+
+.main-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 6%;
+}
+
+.info {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.228); 
+    width: 300px;
+    height: 350px;
+    display: inline-block;
+    border-radius: 7px;
+    margin-right: 20px;
+    color: white;
+}
+
+.info h1 {
+    text-align: center;
+    font-size: 30px;
+    margin: 0 20px;
+    margin-top: 5px;
+    border-bottom: 2px solid white;
+
+}

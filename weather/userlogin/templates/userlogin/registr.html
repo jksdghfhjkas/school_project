@@ -1,0 +1,17 @@
+{% extends 'weatherapp/index.html' %}
+
+{% block content %}
+
+<form method="POST" class="login-form">
+    {% csrf_token %}
+   
+    {{ form }}
+    
+    {% if massage %}
+    {{message}}
+    {% endif %}
+
+    <button type="submit">Регистрация</button>
+
+</form>
+{% endblock %}

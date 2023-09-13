@@ -1,0 +1,46 @@
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin: 20px auto;
+
+}
+.login-form label {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.login-form input {
+    border: none;
+    outline: none;
+
+    border: solid 1.5px black;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.login-form input:focus {
+    border-color: green;
+}
+
+
+.login-form button {
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 20px;
+    background: white;
+    border: solid 1.5px rgb(255, 175, 36);
+    color: rgb(255, 175, 36);
+    transition: 0.4s;
+}
+
+.login-form button:hover {
+    color: white;
+    background: rgb(255, 175, 36);
+}
+
+.login-form button:focus {
+    background: rgb(210, 134, 4);
+    transition: 0s;
+}

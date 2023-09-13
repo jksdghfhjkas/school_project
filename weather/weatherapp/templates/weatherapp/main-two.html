@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'weatherapp/css/main.css' %}">
+
+</head>
+<body>
+    <div class="color"></div>
+
+    <img src="{% static 'weatherapp/img/two.png' %}" alt="">
+    <header>
+        <img src="{% static 'weatherapp/img/free-icon-shaman-2021355.png' %}" alt="" class="icon">
+        <h1>Погода от шамана</h1>
+
+        <nav>
+            <ul>
+                <li><a href="#">на сегодня</a></li>
+                <li><a href="#">на 5 дней</a></li>
+                <li><a href="#">Войти</a></li>
+            </ul>
+        </nav>
+        
+
+    </header>
+    
+    <div class="content-one">
+        <h1 class="content-one-header">Узнать погоду сейчас</h1>
+
+        <div>
+            <form action="" method="post" class="form-one">
+                <p>по координатам</p>
+                <input type="number">
+                <input type="number">
+                <button type="submit">Поиск</button>
+            </form>
+
+            <form action="" method="post" class="form-two">
+                <p>по названию</p>
+                <input type="text">
+                <button type="submit">Поиск</button>
+            </form>
+        </div>
+        
+    </div>
+
+    <div class="main-info">
+
+        <div class="info">
+            <h1>От шамана</h1>
+
+            <p style="margin: 0 20px; margin-top: 20px; font-size: 20px; ">Шаман утверждает что --</p>
+            <p style="font-size: 25px; text-align: center;">{{shaman}}</p>
+        </div>
+
+        <div class="info">
+            <h1>Yandex</h1>
+        </div>
+
+        <div class="info">
+            <h1>Gismeteo</h1>
+        </div>
+
+        <div class="info" style="margin-right: 0;">
+            <h1>OpenWeatherMap</h1>
+        </div>
+
+    </div>
+    
+
+    
+
+</body>
+</html>
