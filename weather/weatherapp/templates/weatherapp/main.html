@@ -2,8 +2,6 @@
 
 {% block content %}
 
-<!-- <h1>{{user.username}}</h1>
-<h1>{{user.email}}</h1> -->
 <h1>Следить за погодой</h1>
 <form method="POST">
     {% csrf_token %}
@@ -13,24 +11,40 @@
 
 <h1 style="text-align: center; color: green;">Погода сегодня</h1>
 
+<div style="column-count: 2;">
 
+    <div>
+        <h1>OpenWeatherMap</h1>
     
-<div class="info-sity">
-<h1>OpenWeatherMap</h1>
-{% for info in user_sity %}
-<div class="info-sity-brochure">
-    <h1>{{ info.city }}</h1>
-    <h1>{{ info.temp }}</h1>
-    <img src="http://openweathermap.org/img/w/{{ info.image }}.png" alt="Фото погоды" />
+        {% for i in openweather %}
+    
+        <div>
+            <h1>{{ i.city }}</h1>
+            <h1>{{ i.temp }}</h1>
+            <img src="http://openweathermap.org/img/w/{{i.image}}.png" alt="">
+        </div>
+    
+        {% endfor %}
+    
+    </div>
+    
+    <div>
+        <h1>Yandex Weather</h1>
+    
+        {% for i in yandex %}
+    
+        <div>
+            <h1>{{ i.city }}</h1>
+            <h1>{{ i.temp }}</h1>
+            <img style="background: black;" src="{{ i.image }}" alt="">
+        </div>
+    
+        {% endfor %}
+    
+    </div>
 
-    <form method="post" class="delete-main-form">
-        {% csrf_token %}
-        <button type="submit" value="{{info.city}}" name="Delete">Delete</button>
-    </form>
 </div>
-        
-    {% endfor %}
-</div>
+
 
 
 

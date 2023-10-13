@@ -2,6 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.main),
-    path('main/', views.Main, name='main') 
+    path('', views.main, name='one_page'),
+    path('main/', views.Main, name='main'),
+    path('forecast/yandex/', views.forecast_yandex, name='five_day_yandex'),
+    path('forecast/open/<str:pk>', views.NewsDetailViews.as_view(), name='fore-open')
+
 ]

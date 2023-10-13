@@ -20,7 +20,7 @@
             <ul>
                 <li><a href="#">на сегодня</a></li>
                 <li><a href="#">на 5 дней</a></li>
-                <li><a href="#">Войти</a></li>
+                <li><a href="{% url 'login' %}">Войти</a></li>
             </ul>
         </nav>
         
@@ -32,15 +32,17 @@
 
         <div>
             <form action="" method="post" class="form-one">
+                {% csrf_token %}
                 <p>по координатам</p>
-                <input type="number">
-                <input type="number">
+                <input type="number" name="lat">
+                <input type="number" name="lon">
                 <button type="submit">Поиск</button>
             </form>
 
             <form action="" method="post" class="form-two">
+                {% csrf_token %}
                 <p>по названию</p>
-                <input type="text">
+                <input type="text" name="NameSity">
                 <button type="submit">Поиск</button>
             </form>
         </div>
@@ -52,26 +54,38 @@
         <div class="info">
             <h1>От шамана</h1>
 
-            <p style="margin: 0 20px; margin-top: 20px; font-size: 20px; ">Шаман утверждает что --</p>
+            <p style="margin-top: 5px; font-size: 20px; ">Шаман утверждает что --</p>
             <p style="font-size: 25px; text-align: center;">{{shaman}}</p>
         </div>
 
         <div class="info">
             <h1>Yandex</h1>
-        </div>
+            <ul>
+                {% for i in info_yandex %}
 
-        <div class="info">
-            <h1>Gismeteo</h1>
+                    <li class="name-sity">{{ i.city }}</li>
+                    <li style="border-bottom: 1px solid white; padding-bottom: 5px;">{{ i.date }}</li>
+                    <li class="temp">{{ i.temp }} °</li>
+                    <img src="{{i.image}}" alt="">
+
+                {% endfor %}
+            </ul>
+
         </div>
 
         <div class="info" style="margin-right: 0;">
             <h1>OpenWeatherMap</h1>
+            {% for i in info_openweather %}
+
+                <li class="name-sity">{{ i.city }}</li>
+                <li style="border-bottom: 1px solid white; padding-bottom: 5px;">{{ i.date }}</li>
+                <li class="temp">{{ i.temp }} °</li>
+                <img src="http://openweathermap.org/img/w/{{i.image}}.png" alt="">
+
+            {% endfor %}
+
         </div>
 
     </div>
-    
-
-    
-
 </body>
 </html>
