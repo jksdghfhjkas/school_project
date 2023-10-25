@@ -23,9 +23,9 @@ async def main():
     task2 = asyncio.create_task(RequestGetOne(url, cities, user_sity))
     await task1, task2
 
-# asyncio.run(main())
+asyncio.run(main())
 
-# for i in user_sity:
-#     print(i)
+for i in user_sity:
+    print(i)
 
 
