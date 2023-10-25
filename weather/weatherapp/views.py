@@ -30,6 +30,8 @@ SOURSE = ['Yandex api', 'OpenWeather api']
 
 INFO_SITY = {'yandex': [], 'openweather': []}
 
+def Test_Transcript(source, name_sity, response_json, coord):
+    print(Fore.GREEN + str(response_json) + Fore.WHITE)
 
 def Transcript(source, name_sity, response_json, coord):
 
@@ -95,7 +97,7 @@ def one_page(request):
     return render(request, "weatherapp/one_page.html")
 
 @login_required
-def Main(request):
+def Weather_login_get(request):
     
     """обработка формы"""
     if request.method == "POST":
@@ -122,7 +124,7 @@ def Main(request):
 
     INFO_SITY['yandex'].clear()
     INFO_SITY['openweather'].clear()
-    asyncio.run(Start_Parser(coordinate, name_sity=set_namesity, transcript=Transcript))
+    asyncio.run(Start_Parser(coordinate, name_sity=set_namesity, transcript=Test_Transcript))
 
     form = forms.SitiesForm()
     return render(request, 'weatherapp/main.html', {'form': form, 'yandex': INFO_SITY['yandex'], 'openweather': INFO_SITY['openweather']})
@@ -146,7 +148,9 @@ def main(request):
             coord = [response_json[0]['lat'],
                      response_json[0]['lon']]
             
-            asyncio.run(Start_Parser(coord, sity))
+            print(Fore.GREEN + str(coord) + Fore.WHITE)
+            
+            asyncio.run(Start_Parser([coord], sity, Transcript))
 
         elif request.POST.get('lat') != '' and request.POST.get('lon') != '': 
 

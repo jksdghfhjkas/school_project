@@ -3,27 +3,36 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'weatherapp/css/index_views.css' %}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{% static 'weatherapp/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'userlogin/userloginstyle.css' %}">
+    {% block style_link %}{% endblock style_link %}
 </head>
 <body>
+    <div class="color"></div>
+
+    <img class="background-img" src="{% static 'weatherapp/img/height.png' %}" alt="">
     <header>
-        <h1>Погодное приложение</h1>
+        <img src="" alt="" class="icon">
+        <h1>YourWeather</h1>
+
         <nav>
             <ul>
-                <li><a href="{% url 'registr' %}">Регистрация</a></li>
+                <li><a href="#">на сегодня</a></li>
+                <li><a href="#">на 5 дней</a></li>
                 <li><a href="{% url 'login' %}">Войти</a></li>
             </ul>
         </nav>
+        
+
     </header>
+    
     {% block content %}{% endblock %}
+
 </body>
 </html>

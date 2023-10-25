@@ -1,61 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'weatherapp/css/main.css' %}">
+{% extends 'weatherapp/index.html' %}
+{% load static %}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600;700&display=swap" rel="stylesheet">
+{% block style_link %}
+<link rel="stylesheet" href="{% static 'weatherapp/css/main.css' %}">
+{% endblock style_link %}
 
-</head>
-<body>
-    <div class="color"></div>
-
-    <img class="background-img" src="{% static 'weatherapp/img/height.png' %}" alt="">
-    <header>
-        <img src="" alt="" class="icon">
-        <h1>YourWeather</h1>
-
-        <nav>
-            <ul>
-                <li><a href="#">на сегодня</a></li>
-                <li><a href="#">на 5 дней</a></li>
-                <li><a href="{% url 'login' %}">Войти</a></li>
-            </ul>
-        </nav>
-        
-
-    </header>
+{% block content %}
+<div class="content-one">
     
-    <div class="content-one">
-    
-        <h1 class="content-one-header">Узнайте погоду сейчас</h1>
+    <h1 class="content-one-header">Узнайте погоду сейчас</h1>
 
-        <div>
-            <p style="margin-bottom: 20px;">Получите актуальные данные о погоде
-                 в любом месте по координатам или названию.</p>
+    <div>
+        <p style="margin-bottom: 20px;">Получите актуальные данные о погоде
+             в любом месте по координатам или названию.</p>
 
-            <form action="" method="post" class="form-one">
-                {% csrf_token %}
-                <p>Введите координаты:</p>
-                <input class="form-input" type="number" name="lat">
-                <input type="number" name="lon">
-                <button type="submit">Поиск</button>
-            </form>
+        <form action="" method="post" class="form-one">
+            {% csrf_token %}
+            <p>Введите координаты:</p>
+            <input type="number" name="lat" placeholder="Lat">
+            <input type="number" name="lon" placeholder="Long">
+            <button type="submit">Поиск</button>
+        </form>
 
-            <form action="" method="post" class="form-two">
-                {% csrf_token %}
-                <p>Введите название:</p>
-                <input type="text" name="NameSity">
-                <button type="submit">Поиск</button>
-            </form>
-        </div>
-        
+        <form action="" method="post" class="form-two">
+            {% csrf_token %}
+            <p>Введите название:</p>
+            <input type="text" name="NameSity" placeholder="Name">
+            <button type="submit">Поиск</button>
+        </form>
     </div>
+    
+</div>
+
+<div class="broshure">
+    {% for i in info_openweathermap %}
+    <div class="top-info">
+        <p>{{i.city}}</p>
+        <img src="http://openweathermap.org/img/w/{{i.image}}.png" alt="">
+    </div>
+    
+    <div class="center-info">
+        <p>{{i.date}}</p>
+        <h1>{{i.temp}}</h1>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+    
+
 
     <!-- <div class="main-info">
 
