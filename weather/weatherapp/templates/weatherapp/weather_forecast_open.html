@@ -4,6 +4,10 @@
 
 <h1>Hello weather openweather forecast the five day</h1>
 
-<h1>{{ name_sity.NameSity }}</h1>
+<div>
+    {% for i in info %}
+    <p>{{ i }}</p>
+    {% endfor %}
+</div>
 
 {% endblock %}

@@ -22,6 +22,7 @@
             <h1>{{ i.city }}</h1>
             <h1>{{ i.temp }}</h1>
             <img src="http://openweathermap.org/img/w/{{i.image}}.png" alt="">
+            <a href="{% url 'fore-open' i.city %}">Узнать на 5 дней</a>
         </div>
     
         {% endfor %}

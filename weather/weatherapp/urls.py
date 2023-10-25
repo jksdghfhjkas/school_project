@@ -5,6 +5,5 @@ urlpatterns = [
     path('', views.main, name='one_page'),
     path('main/', views.Main, name='main'),
     path('forecast/yandex/', views.forecast_yandex, name='five_day_yandex'),
-    path('forecast/open/<str:pk>', views.NewsDetailViews.as_view(), name='fore-open')
-
+    path('forecast/open/<str:id_sity>/', views.forecast_openweather, name='fore-open')
 ]

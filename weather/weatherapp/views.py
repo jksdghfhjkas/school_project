@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 import requests
 from django.contrib.auth.decorators import login_required
 from . import models
+from django.db.models import Q
 from . import forms
 from colorama import Fore
 
@@ -13,6 +14,10 @@ from django.contrib.auth.models import User
 
 from random import choice
 from time import ctime
+
+def Print(string):
+    print(Fore.GREEN + str(string) + Fore.WHITE)
+
 
 GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/direct?q={}&appid=" + 'ae503a9e809c10ec2d6a2fdda6737a49'
 
@@ -26,7 +31,7 @@ SOURSE = ['Yandex api', 'OpenWeather api']
 INFO_SITY = {'yandex': [], 'openweather': []}
 
 
-def get_data_parser(source, name_sity, response_json):
+def Transcript(source, name_sity, response_json, coord):
 
     if source == "Yandex api":
                 
@@ -34,7 +39,8 @@ def get_data_parser(source, name_sity, response_json):
             'city': name_sity,
             'temp': response_json['fact']['temp'],
             'date': ctime(),
-            'image': 'http://127.0.0.1:8000/static/weatherapp/img/yandex_icon/{}.png'.format(response_json['fact']['icon']) 
+            'image': 'http://127.0.0.1:8000/static/weatherapp/img/yandex_icon/{}.png'.format(response_json['fact']['icon']),
+            'lat_lon': f"{coord[0]}, {coord[1]}"
         })
 
     elif source == "OpenWeather api":
@@ -44,45 +50,46 @@ def get_data_parser(source, name_sity, response_json):
             'temp': response_json['main']['temp'],
             'date': ctime(),
             'image': response_json['weather'][0]['icon'],
+            'lat_lon': f"{coord[0]}, {coord[1]}"
+            
         })
 
 
 
-async def Parser_Yandex_Weather(session, coord, header, url, source, name_sity, function):
+async def Parser_Weather(session, coord, header, url, source, name_sity, function):
 
 
-    async with session.get(url.format(coord[0], coord[1]), proxy=None, headers=header) as response:
+    async with session.get(url.format(*coord), proxy=None, headers=header) as response:
 
         if response.status == 200:
             response_json = json.loads(await response.text())
             if name_sity == None: name_sity = f'lat: {coord[0]}, lon: {coord[1]}'
 
-            function(source, name_sity, response_json) #функция разбора данных
+            function(source, name_sity, response_json, coord) #функция разбора данных
     
         else: 
             print(Fore.RED + str(response.status) + Fore.WHITE)
             
 
-async def Start_Parser(coordinates, name_sity, deskriptor):
+async def Start_Parser(coordinates, name_sity, transcript):
 
     weather_task = []
 
     async with aiohttp.ClientSession() as session:
         for num, coord in enumerate(coordinates):
             
-            weather_task += [asyncio.create_task(Parser_Yandex_Weather(session, 
+            weather_task += [asyncio.create_task(Parser_Weather(session, 
                                                 coord, 
                                                 header=HEADERS[i], 
                                                 url=URLS[i], 
                                                 source=SOURSE[i], 
                                                 name_sity=name_sity[num], 
-                                                function=deskriptor)) for i in range(0, 2)]
+                                                function=transcript)) for i in range(0, 2)]
 
             
         await asyncio.gather(*weather_task)
 
             
-
 """вывод страниц"""
 def one_page(request):
     return render(request, "weatherapp/one_page.html")
@@ -93,11 +100,6 @@ def Main(request):
     """обработка формы"""
     if request.method == "POST":
 
-        # if str(request.POST.get('Delete')) != 'None':
-        #     models.Sities.objects.filter(NameSity=request.POST.get('Delete')).delete()
-        #     return redirect('main')
-
-        
         form = forms.SitiesForm(request.POST)
 
         if form.is_valid():
@@ -120,7 +122,7 @@ def Main(request):
 
     INFO_SITY['yandex'].clear()
     INFO_SITY['openweather'].clear()
-    asyncio.run(Start_Parser(coordinate, name_sity=set_namesity, deskriptor=get_data_parser))
+    asyncio.run(Start_Parser(coordinate, name_sity=set_namesity, transcript=Transcript))
 
     form = forms.SitiesForm()
     return render(request, 'weatherapp/main.html', {'form': form, 'yandex': INFO_SITY['yandex'], 'openweather': INFO_SITY['openweather']})
@@ -151,7 +153,7 @@ def main(request):
             lat = int(request.POST.get('lat'))
             lon = int(request.POST.get('lon'))
 
-            asyncio.run(Start_Parser([[lat, lon]], [None], get_data_parser))
+            asyncio.run(Start_Parser([[lat, lon]], [None], Transcript))
 
         return redirect('one_page')
 
@@ -161,29 +163,34 @@ def main(request):
 
 #forecast render template >>>>
 
-from django.views.generic import DetailView
-
-class NewsDetailViews(DetailView):
-    model = models.Sities
-    template_name = 'forecast/weather_forecast_open.html'
-    context_object_name = 'name_sity'
+ForeCast_URL = 'https://api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&appid=' + 'ae503a9e809c10ec2d6a2fdda6737a49' + '&units=metric'
+FORECAST_INFO_SITY = []
 
 
-URLS[0] = None
-URLS[1] = "api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&appid=" + 'ae503a9e809c10ec2d6a2fdda6737a49' + '&units=metric'
+def Transcript_forecast(source, name_sity, response_json, coord):
+    global FORECAST_INFO_SITY
+    FORECAST_INFO_SITY = [i for i in response_json['list']]
 
-
-def get_forecast_openweather(name_sity, response_json):
-    pass
-
+async def Forecast_Start_Parser(coordinate, namesity):
+    async with aiohttp.ClientSession() as session:
+        
+        await asyncio.gather(asyncio.create_task(Parser_Weather(session, 
+                                                                coord=coordinate,
+                                                                url=ForeCast_URL,
+                                                                header=None,
+                                                                source=None,
+                                                                name_sity=namesity,
+                                                                function=Transcript_forecast)))
 
 @login_required
-def forecast_openweather(request):
+def forecast_openweather(request, id_sity):
+    cities = models.Sities.objects.filter(Q(user=request.user) and Q(NameSity=id_sity))[0]
+    coordinate = [cities.coordinate_lat, cities.coordinate_lon]
 
-    asyncio.run(Start_Parser([[1, 1]], [None], get_data_parser))
+    asyncio.run(Forecast_Start_Parser(coordinate, cities.NameSity))
+    
+    return render(request, 'weatherapp/weather_forecast_open.html', {'info' : FORECAST_INFO_SITY})
 
-
-    return render(request, 'weatherapp/weather_forecast_open.html')
 
 @login_required
 def forecast_yandex(request):

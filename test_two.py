@@ -66,4 +66,7 @@ async def Start_Parser(coordinates, name_sity=None, set=True):
             await asyncio.gather(*weather_task)
 
 
-asyncio.run(Start_Parser([[1, 1], [1, 1]]))
+# asyncio.run(Start_Parser([[1, 1], [1, 1]]))
+ForeCast_URL = 'api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&appid=' + 'ae503a9e809c10ec2d6a2fdda6737a49'
+
+response = requests.get(ForeCast_URL.format(51, 0))

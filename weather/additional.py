@@ -62,26 +62,8 @@ async def Start_Parser(coordinates, name_sity, deskriptor):
         await asyncio.gather(*weather_task)
 
     
-asyncio.run(Start_Parser([[1, 1]], [None], get_data_parser))
+# asyncio.run(Start_Parser([[1, 1], [1, 1]], [None, None], get_data_parser))
 
-# print(str(INFO_SITY))
+URL = 'api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&appid=' + 'ae503a9e809c10ec2d6a2fdda6737a49'
 
-
-# asyncio.run(Start_Parser_YandexApi([1, 1], url=URL_OPEN_WEATHER, header=None, source='OpenWeather api'))
-
-# print(USER_SITY)
-
-
-# GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/direct?q={}&appid=" + 'ae503a9e809c10ec2d6a2fdda6737a49'
-
-# response = requests.get(GEOCODE_URL.format('London')).text
-# response_json = json.loads(response)
-
-# lat = response_json[0]['lat']
-# lon = response_json[0]['lon']
-
-# print(f'lat: {lat}  lon: {lon}')
-
-
-
-
+response = requests.get(URL.format(1, 1))
