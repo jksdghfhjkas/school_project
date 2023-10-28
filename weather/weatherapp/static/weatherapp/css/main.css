@@ -1,9 +1,16 @@
+.content-main {
+    display: flex;
+    justify-content: space-between;
+}
+
 .content-one {
     margin: 20px 6%;
     border-radius: 7px;
     padding: 15px 20px;
     width: 55%;
     height: 600px;
+    display: inline-block;
+    margin-right: 0;
 }
 
 .content-one-header {
@@ -11,7 +18,8 @@
     color: black;
     font-size: 45px;
     margin-bottom: 25px;
-    
+    border-bottom: 3px solid rgba(255, 153, 0, 0.546);
+    display: inline-block;
 }
 
 .content-one div p {
@@ -64,3 +72,52 @@
     background: rgb(162, 211, 255);
 
 }
+
+
+
+.broshure {
+    display: inline-block;
+    position: relative;
+    width: 35%;
+    height: 600px;
+    background: linear-gradient(white, rgba(225, 225, 225, 0.062));
+    margin: 20px 6%;
+    padding: 15px 20px;
+    border-radius: 20px;
+    margin-top: 50px;
+}
+
+.top-info {
+    margin: 20px; 
+}
+
+.top-info p{
+    font-size: 30px;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 25px;
+}
+
+.top-info img {
+    float: right;
+    width: 100px;
+    background-color: rgba(0, 0, 0, 0.208);
+    border-radius: 20px;
+}
+
+.center-info {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.center-info p{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.center-info h1 {
+    font-size: 60px;
+    font-weight: 1000;
+}
+
+

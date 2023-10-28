@@ -2,7 +2,7 @@ import aiohttp
 import json
 from colorama import Fore
 import asyncio
-from time import ctime
+from time import ctime, time
 
 import requests
 
@@ -18,19 +18,22 @@ INFO_SITY = {'yandex': [], 'openweather': []}
 
 def get_data_parser(source, name_sity, response_json):
 
-    if source == "Yandex api":
+    # if source == "Yandex api":
                 
-        print(Fore.GREEN + "Yandex" + Fore.WHITE)
-        print(str(response_json), '\n\n\n')
+    #     print(Fore.GREEN + "Yandex" + Fore.WHITE)
+    #     print(str(response_json), '\n\n\n')
 
-    elif source == "OpenWeather api":
+    # elif source == "OpenWeather api":
 
-        print(Fore.GREEN + "Openwether" + Fore.WHITE)
-        print(str(response_json), '\n\n\n')
+    #     print(Fore.GREEN + "Openwether" + Fore.WHITE)
+    #     print(str(response_json), '\n\n\n')
+    pass
 
-
+TIME_COUNT = 0
 
 async def Parser_Yandex_Weather(session, coord, header, url, source, name_sity, function):
+    global TIME_COUNT
+    time_start = time()
     async with session.get(url.format(coord[0], coord[1]), proxy=None, headers=header) as response:
 
         if response.status == 200:
@@ -41,7 +44,10 @@ async def Parser_Yandex_Weather(session, coord, header, url, source, name_sity, 
     
         else: 
             print(Fore.RED + str(response.status) + Fore.WHITE)
-            
+
+    print(str(TIME_COUNT))
+    print(f"{str(time_start - time())} - {source}")
+    TIME_COUNT += 1     
 
 async def Start_Parser(coordinates, name_sity, deskriptor):
 
@@ -50,20 +56,19 @@ async def Start_Parser(coordinates, name_sity, deskriptor):
     async with aiohttp.ClientSession() as session:
         for num, coord in enumerate(coordinates):
             
-            weather_task += [asyncio.create_task(Parser_Yandex_Weather(session, 
-                                                coord, 
-                                                header=HEADERS[i], 
-                                                url=URLS[i], 
-                                                source=SOURSE[i], 
-                                                name_sity=name_sity[num], 
-                                                function=deskriptor)) for i in range(0, 2)]
+            # weather_task += [asyncio.create_task(Parser_Yandex_Weather(session, 
+            #                                     coord, 
+            #                                     header=HEADERS[i], 
+            #                                     url=URLS[i], 
+            #                                     source=SOURSE[i], 
+            #                                     name_sity=name_sity[num], 
+            #                                     function=deskriptor)) for i in range(0, 2)]
+            weather_task.append(asyncio.create_task(Parser_Yandex_Weather(session, coord, header=None, url=URLS[1], source=SOURSE[1], name_sity=None, function=deskriptor)))
+            weather_task.append(asyncio.create_task(Parser_Yandex_Weather(session, coord, header=HEADERS[0], url=URLS[0], source=SOURSE[0], name_sity=None, function=deskriptor)))
 
-            
         await asyncio.gather(*weather_task)
 
-    
-# asyncio.run(Start_Parser([[1, 1], [1, 1]], [None, None], get_data_parser))
-
-URL = 'api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&appid=' + 'ae503a9e809c10ec2d6a2fdda6737a49'
-
-response = requests.get(URL.format(1, 1))
+for i in range(100):
+    # asyncio.run(Start_Parser([[1, 1], [1, 1]], [None, None], get_data_parser))
+    # print('\n')
+    pass

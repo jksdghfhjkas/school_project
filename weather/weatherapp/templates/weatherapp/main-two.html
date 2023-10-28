@@ -6,44 +6,61 @@
 {% endblock style_link %}
 
 {% block content %}
-<div class="content-one">
-    
-    <h1 class="content-one-header">Узнайте погоду сейчас</h1>
+<div class="content-main">
+    <div class="content-one">
+        
+        <h1 class="content-one-header">Узнайте погоду сейчас</h1>
 
-    <div>
-        <p style="margin-bottom: 20px;">Получите актуальные данные о погоде
-             в любом месте по координатам или названию.</p>
+        <div>
+            <p style="margin-bottom: 20px;">Получите актуальные данные о погоде
+                в любом месте по координатам или названию.</p>
 
-        <form action="" method="post" class="form-one">
-            {% csrf_token %}
-            <p>Введите координаты:</p>
-            <input type="number" name="lat" placeholder="Lat">
-            <input type="number" name="lon" placeholder="Long">
-            <button type="submit">Поиск</button>
-        </form>
+            <form action="" method="post" class="form-one">
+                {% csrf_token %}
+                <p>Введите координаты:</p>
+                <input type="number" name="lat" placeholder="Lat">
+                <input type="number" name="lon" placeholder="Long">
+                <button type="submit">Поиск</button>
+            </form>
 
-        <form action="" method="post" class="form-two">
-            {% csrf_token %}
-            <p>Введите название:</p>
-            <input type="text" name="NameSity" placeholder="Name">
-            <button type="submit">Поиск</button>
-        </form>
+            <form action="" method="post" class="form-two">
+                {% csrf_token %}
+                <p>Введите название:</p>
+                <input type="text" name="NameSity" placeholder="Name">
+                <button type="submit">Поиск</button>
+            </form>
+        </div>
+        
     </div>
-    
+
+    <div class="broshure">
+        {% for i in info_openweather %}
+        <div class="top-info">
+            <p>{{i.city}}</p>
+            <img src="http://openweathermap.org/img/w/{{i.image}}.png" alt="">
+        </div>
+        
+        <div class="center-info">
+            <p>{{i.date}}</p>
+            <h1>{{i.temp}}°</h1>
+        </div>
+
+        <div class="bottom-info">
+            <p>{{i.cloud}}</p>
+            <p></p>
+        </div>
+
+        {% empty %}
+            <h1 style="color: rgba(255, 0, 0, 0.454); text-align: center;">Введите данные</h1>
+        {% endfor %}
+
+    </div>
 </div>
 
-<div class="broshure">
-    {% for i in info_openweathermap %}
-    <div class="top-info">
-        <p>{{i.city}}</p>
-        <img src="http://openweathermap.org/img/w/{{i.image}}.png" alt="">
+<div class="content-forecast">
+    <div class="">
+
     </div>
-    
-    <div class="center-info">
-        <p>{{i.date}}</p>
-        <h1>{{i.temp}}</h1>
-    </div>
-    {% endfor %}
 </div>
 
 {% endblock %}

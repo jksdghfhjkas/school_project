@@ -24,7 +24,7 @@ GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/direct?q={}&appid=" + 'ae50
 HEADERS = [{'X-Yandex-API-Key': 'f9d5d3ab-ebde-4d39-8070-3e6f5ab81e8c'}, None]
 
 URLS = ['https://api.weather.yandex.ru/v2/informers?lat={}&lon={}&lang=ru_RU', 
-        'https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid=' + 'ae503a9e809c10ec2d6a2fdda6737a49' + '&units=metric']
+        'https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid=' + 'f2319986030c77f8d17c87999e88be66' + '&units=metric']
 
 SOURSE = ['Yandex api', 'OpenWeather api']
 
@@ -32,6 +32,18 @@ INFO_SITY = {'yandex': [], 'openweather': []}
 
 def Test_Transcript(source, name_sity, response_json, coord):
     print(Fore.GREEN + str(response_json) + Fore.WHITE)
+
+def get_data_parser(source, name_sity, response_json, coord):
+
+    if source == "Yandex api":
+                
+        print(Fore.GREEN + "Yandex" + Fore.WHITE)
+        print(str(response_json), '\n\n\n')
+
+    elif source == "OpenWeather api":
+
+        print(Fore.GREEN + "Openwether" + Fore.WHITE)
+        print(str(response_json), '\n\n\n')
 
 def Transcript(source, name_sity, response_json, coord):
 
@@ -52,8 +64,9 @@ def Transcript(source, name_sity, response_json, coord):
             'temp': response_json['main']['temp'],
             'date': ctime(),
             'image': response_json['weather'][0]['icon'],
-            'lat_lon': f"{coord[0]}, {coord[1]}"
-            
+            'lat_lon': f"{coord[0]}, {coord[1]}",
+            'wind' : response_json['wind']['speed'],
+            'cloud' : response_json['weather'][0]['main']
         })
 
 
@@ -61,7 +74,7 @@ def Transcript(source, name_sity, response_json, coord):
 async def Parser_Weather(session, coord, header, url, source, name_sity, function):
 
 
-    async with session.get(url.format(*coord), proxy=None, headers=header) as response:
+    async with session.get(url.format(*coord), proxy=None, headers=header, timeout=100) as response:
 
         if response.status == 200:
             response_json = json.loads(await response.text())
@@ -132,14 +145,11 @@ def Weather_login_get(request):
 
 
 def main(request):
-    weather_shaman = ['Будет тепло', 'Будет холодно', 'Будет ветренно',
-                      'Будет дождь', 'Будет солнечно', 'Будет ...', 'Не будет ...']
 
     if request.method == 'POST':
-
         INFO_SITY['yandex'].clear()
         INFO_SITY['openweather'].clear()
-        
+
         if request.POST.get('NameSity') != None:
             sity = request.POST.get('NameSity')
             response = requests.get(GEOCODE_URL.format('London')).text
@@ -148,8 +158,8 @@ def main(request):
             coord = [response_json[0]['lat'],
                      response_json[0]['lon']]
             
-            print(Fore.GREEN + str(coord) + Fore.WHITE)
-            
+            print(Fore.GREEN + str(sity) + Fore.WHITE)
+
             asyncio.run(Start_Parser([coord], sity, Transcript))
 
         elif request.POST.get('lat') != '' and request.POST.get('lon') != '': 
@@ -161,7 +171,7 @@ def main(request):
 
         return redirect('one_page')
 
-    return render(request, 'weatherapp/main-two.html', {'shaman': choice(weather_shaman), 'info_openweather': INFO_SITY['openweather'], 'info_yandex': INFO_SITY['yandex']})
+    return render(request, 'weatherapp/main-two.html', {'info_openweather': INFO_SITY['openweather'], 'info_yandex': INFO_SITY['yandex']})
 
 
 
