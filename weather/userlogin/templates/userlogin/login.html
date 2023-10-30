@@ -1,13 +1,24 @@
 {% extends 'weatherapp/index.html' %}
+{% load static %}
+
+
+{% block style_link %}
+<link rel="stylesheet" href="{% static 'userlogin/userloginstyle.css' %}">
+{% endblock %}
+
+{% block fone-img %}
+<img class="background-img" src="{% static 'weatherapp/img/height.png' %}" alt="">
+{% endblock %}
 
 {% block content %}
+    <form method="POST" class="login-form">
+        <h1>Авторизация</h1>
+        {% csrf_token %}
+        <p>Логин:</p>
+        {{form.username}}
+        <p>Пароль:</p>
+        {{form.password}}
 
-
-<form method="POST" class="login-form">
-    {% csrf_token %}
-
-    {{form}}
-
-    <button type="submit">Войти</button>
-</form>
+        <button type="submit">Войти</button>
+    </form>
 {% endblock %}

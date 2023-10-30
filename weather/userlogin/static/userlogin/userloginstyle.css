@@ -1,43 +1,62 @@
+.border-link li:nth-of-type(3) a{
+    border-bottom: 2px solid rgba(255, 153, 0, 0.546);
+    color: rgba(255, 153, 0, 0.546);
+}
 
 .login-form {
+    width: 35%;
+    height: 600px;
+    padding: 40px;
+    padding-top: 10px;
     display: flex;
     flex-direction: column;
-    width: 25%;
-    margin: 20px auto;
-
+    margin: 0px auto;
+    background: linear-gradient(white, rgba(225, 225, 225, 0.062));
+    border-radius: 20px;
+    margin-top: 50px;
+    margin-bottom: 0;
 }
-.login-form label {
+
+.login-form h1 {
+    text-align: center;
+    font-weight: 500;
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.login-form p {
     margin-top: 10px;
     font-size: 20px;
 }
 
 .login-form input {
-    border: none;
     outline: none;
-
     border: solid 1.5px black;
     padding: 10px;
     font-size: 20px;
+    border-radius: 20px;
+    background: none;
 }
 
 .login-form input:focus {
     border-color: green;
 }
 
-
 .login-form button {
-    margin-top: 15px;
+    margin-top: 20px;
     padding: 10px;
     font-size: 20px;
-    background: white;
-    border: solid 1.5px rgb(255, 175, 36);
-    color: rgb(255, 175, 36);
+    background: none;
+    border: solid 1.5px rgba(255, 153, 0, 0.546);
+    color: rgba(255, 153, 0);
     transition: 0.4s;
+    border-radius: 20px;
 }
 
 .login-form button:hover {
     color: white;
-    background: rgb(255, 175, 36);
+    background: rgba(255, 153, 0, 0.546);
 }
 
 .login-form button:focus {

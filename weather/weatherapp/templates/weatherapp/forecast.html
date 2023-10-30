@@ -1,0 +1,35 @@
+{% extends 'weatherapp/index.html' %}
+{% load static %}
+
+{% block style_link %}
+<link rel="stylesheet" href="{% static 'weatherapp/css/forecast.css' %}">
+{% endblock %}
+
+{% block fone-img %}
+<img class="background-img" src="{% static 'weatherapp/img/rabstol_net_mountain_21.jpg' %}" alt="">
+{% endblock %}
+
+{% block content %}
+<div class="form-main">
+    <form method="GET">
+        <p>Введите название:</p>
+        <input type="text" name="sity">
+        <button type="submit">Поиск</button>
+    </form>
+    
+    <form method="GET">
+        <p>Введите координаты:</p>
+        <input type="number" value="lat" name="lat">
+        <input type="number" value="long" name="long">
+        <button type="submit">Поиск</button>
+    </form>
+</div>
+
+
+{% for i in info %}
+<p>{{i}}</p>
+{% empty %}
+<p>нет данных</p>
+{% endfor %}
+
+{% endblock %}

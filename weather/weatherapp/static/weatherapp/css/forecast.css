@@ -1,0 +1,72 @@
+.hello {
+    background-color: green;
+}
+
+.form-main {
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    margin: 20px;
+    background-color: rgba(255, 255, 255, 0.425);
+}
+
+.form-main form {
+    display: inline-block;
+    width: 50%;
+}
+
+.form-main form input {
+    border-radius: 10px;
+    border: 1.5px solid black;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.171);
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+
+/* .form-main {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.425);
+    margin: 20px;
+}
+
+.form-main form input {
+    border-radius: 10px;
+    border: solid 1.5px black;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.171);
+    transition: 0.2s;
+    font-weight: 600;
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+.form-main form input{
+    width: 30%;
+}
+
+
+.form-main form input:focus {
+    outline: none;
+    border-color: green;
+}
+
+.form-main form button {
+    border-radius: 10px;
+    border: solid 1.5px rgba(255, 153, 0, 0.546);
+    color: rgba(255, 153, 0);
+    height: 40px;
+    font-weight: 600;
+    font-size: 14px;
+    width: 20%;
+    transition: 0.5s;
+    background: none;
+}
+
+.form-main form button:hover {
+    color: black;
+    background-color: rgba(255, 153, 0, 0.546);
+} */

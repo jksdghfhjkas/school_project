@@ -14,25 +14,37 @@
     {% block style_link %}{% endblock style_link %}
 </head>
 <body>
-    <div class="color"></div>
+    <div class="wrapper">
+        <div class="color"></div>
 
-    <img class="background-img" src="{% static 'weatherapp/img/height.png' %}" alt="">
-    <header>
-        <img src="" alt="" class="icon">
-        <h1>YourWeather</h1>
+        {% block fone-img %}{% endblock %}
 
-        <nav>
-            <ul>
-                <li><a href="#">на сегодня</a></li>
-                <li><a href="#">на 5 дней</a></li>
-                <li><a href="{% url 'login' %}">Войти</a></li>
-            </ul>
-        </nav>
+        <header>
+            <img src="" alt="" class="icon">
+            <h1><span style="color: rgba(255, 153, 0, 0.546);">Your</span>Weather</h1>
+
+            <nav>
+                <ul class="border-link">
+                    <li><a href="{% url 'one_page' %}">на сегодня</a></li>
+                    <li><a href="{% url 'forecast' %}">на 5 дней</a></li>
+                    <li><a href="{% url 'login' %}">Войти</a></li>
+                </ul>
+            </nav>
+        </header>
         
+        <div class="main">
+            {% block content %}{% endblock %}
+        </div>
+        
+        <footer>
+            <ul>
+                <li>Создатель | Еремеев Антон Сергеевич</li>
+                <li>Руководитель | Савинова Наталья Владимировна</li>
+                <li><a href="#">Ссылка на github проекта</a></li>
+            </ul>
+        </footer>
 
-    </header>
-    
-    {% block content %}{% endblock %}
-
+    </div>
+    {% block javascript %}{% endblock %}
 </body>
 </html>

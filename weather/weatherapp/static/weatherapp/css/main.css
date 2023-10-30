@@ -1,3 +1,7 @@
+.border-link li:nth-of-type(1) {
+    border-bottom: 2px solid rgba(255, 153, 0, 0.546);
+}
+
 .content-main {
     display: flex;
     justify-content: space-between;
@@ -23,7 +27,7 @@
 }
 
 .content-one div p {
-    font-weight: 600;
+    font-weight: 550;
     font-size: 20px;
 }
 
@@ -31,12 +35,31 @@
     margin-bottom: 20px;
 }
 
+.weather-servis {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+.weather-servis span {
+    background-color: rgba(0, 0, 0, 0.386);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.open-weather.active,
+.yandex.active {
+    background-color: rgba(255, 153, 0, 0.546);
+    color: none;
+}
+
 .form-one input,
 .form-two input {
-    border-radius: 0;
-    border: 1px solid rgb(184, 184, 184);
+    border-radius: 10px;
+    border: solid 1.5px black;
     height: 40px;
-    background: linear-gradient(white, rgb(225, 225, 225));
+    background: rgba(0, 0, 0, 0.171);
     transition: 0.2s;
     font-weight: 600;
     font-size: 14px;
@@ -53,29 +76,30 @@
 .form-two input:focus,
 .form-one input:focus {
     outline: none;
-    border: 1px solid rgb(103, 103, 255);
+    border-color: green;
 }
 
 .form-one button, 
 .form-two button {
+    border-radius: 10px;
+    border: solid 1.5px rgba(255, 153, 0, 0.546);
+    color: rgba(255, 153, 0);
     height: 40px;
-    border-radius: none;
-    border: 1px solid rgb(184, 184, 184);
-    background: rgb(203, 238, 255);
     font-weight: 600;
     font-size: 14px;
     width: 20%;
     transition: 0.5s;
+    background: none;
 }
 .form-one button:hover, 
 .form-two button:hover {
-    background: rgb(162, 211, 255);
-
+    color: black;
+    background-color: rgba(255, 153, 0, 0.546);
 }
 
 
-
-.broshure {
+.broshure-yandex.active,
+.broshure-openweather.active {
     display: inline-block;
     position: relative;
     width: 35%;
@@ -85,6 +109,18 @@
     padding: 15px 20px;
     border-radius: 20px;
     margin-top: 50px;
+    margin-bottom: 0;
+}
+
+.broshure-openweather,
+.broshure-yandex {
+    display: none;
+}
+
+.servis-name {
+    text-align: center;
+    border-bottom: 2px solid rgba(255, 153, 0, 0.546);
+    padding-bottom: 15px;
 }
 
 .top-info {
@@ -111,13 +147,29 @@
 }
 
 .center-info p{
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 600;
 }
 
 .center-info h1 {
     font-size: 60px;
     font-weight: 1000;
+    margin: 15px 0;
 }
+
+.bottom-info h1 {
+    font-size: 25px;
+    font-weight: 1000;
+    text-align: center;
+}
+
+.bottom-info p {
+    font-size: 25px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 10px;
+}
+
+
 
 

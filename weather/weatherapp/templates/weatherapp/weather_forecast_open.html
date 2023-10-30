@@ -5,9 +5,14 @@
 <h1>Hello weather openweather forecast the five day</h1>
 
 <div>
-    {% for i in info %}
-    <p>{{ i }}</p>
-    {% endfor %}
+    {% if not none %}
+        {% for i in info %}
+        <p>{{ i }}</p>
+        {% endfor %}
+    {% else %}
+        <h1>введите город</h1>
+    {% endif %}
+    
 </div>
 
 {% endblock %}

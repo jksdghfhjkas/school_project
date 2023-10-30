@@ -5,6 +5,10 @@
 <link rel="stylesheet" href="{% static 'weatherapp/css/main.css' %}">
 {% endblock style_link %}
 
+{% block fone-img %}
+<img class="background-img" src="{% static 'weatherapp/img/height.png' %}" alt="">
+{% endblock %}
+
 {% block content %}
 <div class="content-main">
     <div class="content-one">
@@ -12,8 +16,14 @@
         <h1 class="content-one-header">Узнайте погоду сейчас</h1>
 
         <div>
-            <p style="margin-bottom: 20px;">Получите актуальные данные о погоде
+            <p style="margin-bottom: 20px; font-weight: 600;">Получите актуальные данные о погоде
                 в любом месте по координатам или названию.</p>
+            
+            <p>Выберете сервис:</p>
+            <div class="weather-servis">
+                <span style="margin-right: 10px;" class="open-weather active">Openweathermap</span>
+                <span class="yandex">Яндекс погода</span>
+            </div>
 
             <form action="" method="post" class="form-one">
                 {% csrf_token %}
@@ -33,7 +43,9 @@
         
     </div>
 
-    <div class="broshure">
+    
+    <div class="broshure-openweather active">
+        <h1 class="servis-name">OpenWeatherMap</h1>
         {% for i in info_openweather %}
         <div class="top-info">
             <p>{{i.city}}</p>
@@ -46,7 +58,8 @@
         </div>
 
         <div class="bottom-info">
-            <p>{{i.cloud}}</p>
+            <h1>{{i.cloud}}</h1>
+            <p>{{i.wind}}м/с | ветер</p>
             <p></p>
         </div>
 
@@ -55,56 +68,58 @@
         {% endfor %}
 
     </div>
-</div>
 
-<div class="content-forecast">
-    <div class="">
+    <div class="broshure-yandex">
+        <h1 class="servis-name">Яндекс погода</h1>
+        {% for i in info_yandex %}
+        <div class="top-info">
+            <p>{{i.city}}</p>
+            <img src="{{i.image}}" alt="">
+        </div>
+        
+        <div class="center-info">
+            <p>{{i.date}}</p>
+            <h1>{{i.temp}}°</h1>
+        </div>
+
+        <div class="bottom-info">
+            <h1>{{i.cloud}}</h1>
+            <p>{{i.wind}}м/с | ветер</p>
+            <p></p>
+        </div>
+
+        {% empty %}
+            <h1 style="color: rgba(255, 0, 0, 0.454); text-align: center;">Нет данных поиска или Яндекс заблокировал api</h1>
+        {% endfor %}
 
     </div>
 </div>
 
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+    let openweather = document.querySelector('.open-weather');
+    let yandex = document.querySelector('.yandex');
+
+    let broshure_openweather = document.querySelector('.broshure-openweather');
+    let broshure_yandex = document.querySelector('.broshure-yandex');
+
+    openweather.addEventListener('click', function(){
+        broshure_yandex.classList.remove('active');
+        broshure_openweather.classList.add('active');
+        openweather.classList.add('active');
+        yandex.classList.remove('active');
+    });
+
+    yandex.addEventListener('click', function(){
+        broshure_openweather.classList.remove('active');
+        broshure_yandex.classList.add('active');
+        openweather.classList.remove('active');
+        yandex.classList.add('active');
+    });
+</script>
 {% endblock %}
     
 
-
-    <!-- <div class="main-info">
-
-        <div class="info">
-            <h1>От шамана</h1>
-
-            <p style="margin-top: 5px; font-size: 20px; ">Шаман утверждает что --</p>
-            <p style="font-size: 25px; text-align: center;">{{shaman}}</p>
-        </div>
-
-        <div class="info">
-            <h1>Yandex</h1>
-            <ul>
-                {% for i in info_yandex %}
-
-                    <li class="name-sity">{{ i.city }}</li>
-                    <li style="border-bottom: 1px solid white; padding-bottom: 5px;">{{ i.date }}</li>
-                    <li class="temp">{{ i.temp }} °</li>
-                    <img src="{{i.image}}" alt="">
-
-                {% endfor %}
-            </ul>
-
-        </div>
-
-        <div class="info" style="margin-right: 0;">
-            <h1>OpenWeatherMap</h1>
-
-            {% for i in info_openweather %}
-
-                <li class="name-sity">{{ i.city }}</li>
-                <li style="border-bottom: 1px solid white; padding-bottom: 5px;">{{ i.date }}</li>
-                <li class="temp">{{ i.temp }} °</li>
-                <img src="http://openweathermap.org/img/w/{{i.image}}.png" alt="">
-
-            {% endfor %}
-
-        </div>
-
-    </div> -->
-</body>
-</html>
