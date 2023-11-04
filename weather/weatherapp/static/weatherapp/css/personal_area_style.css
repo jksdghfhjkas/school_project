@@ -48,7 +48,6 @@
     border: solid 1.5px black;
 }
 
-
 .main-title form button {
     border-radius: 10px;
     border: solid 1.5px rgba(255, 153, 0, 0.546);
@@ -59,9 +58,14 @@
     transition: 0.5s;
     background: none;
     padding: 0 10px;
+}
+.button-add {
     width: 15.5%;
 }
-
+.button-delete {
+    width: 18%;
+}
+.button-delete:hover,
 .main-title form button:hover {
     color: black;
     background-color: rgba(255, 153, 0, 0.546);
@@ -94,11 +98,13 @@
 .broshure-openweather.active,
 .broshure-yandex.active {
     display: block;
-    padding: 0 9%;
+    padding: 0 6%;
     padding-bottom: 6%;
+    text-align: center;
 }
 
 .broshure-info {
+    text-align: start;
     display: inline-block;
     padding: 20px;
     background: linear-gradient(white, rgba(225, 225, 225, 0.062));
@@ -151,14 +157,10 @@
     margin-bottom: 20px;
 }
 
-.top-main-title .main-title:nth-of-type(2) {
+.main-title-two {
     float: right;
     margin-right: 6%; 
     margin-left: 0px;
-}
-
-.top-main-title .main-title:nth-of-type(2) form button {
-    width: 16%;
 }
 
 .weather-servis span:nth-of-type(1) {
@@ -171,11 +173,6 @@
         width: 100%;
         margin: 0;
         background: rgba(225, 225, 225, 0.589);
-        border-radius: 0;
-    }
-    .top-main-title .main-title:nth-of-type(2) {
-        margin: 0;
-        float: none;
         border-radius: 0;
     }
     .top-main-title {
@@ -201,7 +198,7 @@
         width: 100%;
         margin: 0;
     }
-    .top-main-title .main-title:nth-of-type(2) form button,
+    .button-delete,
     .main-title form button {
         width: 30%;
     }
@@ -213,5 +210,6 @@
     .broshure-yandex.active {
         padding: 0;
     }
+
 
 }

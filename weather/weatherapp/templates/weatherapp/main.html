@@ -28,26 +28,26 @@
             {% csrf_token %}
             <p>Название:</p>
             {{form.NameSity}}
-            <button type="submit" name="add" value="True" class="button-sity-form">найти</button>
+            <button type="submit" name="add" value="True" class="button-add">найти</button>
         </form>
     </div>
     
-    <div class="main-title" >
+    <div class="main-title main-title-two">
         <h1>Удаление записей</h1>
 
         <p>Удалите населенный пункт из отслеживаемых</p>
 
         <form method="POST" style="margin-top: 20px;">
             {% csrf_token %}
-            <p>Запись:</p>
+            <p>Выберете запись:</p>
             {{form_del.record}}
-            <button type="submit" name="del" value="True" class="button-sity-form">Удалить</button>
+            <button type="submit" name="del" value="True" class="button-delete">Удалить</button>
         </form>
 
     </div>
 </div>
 
-{% if not error %}
+
 <div class="main-weather-info">
 
     <h1 class="title">Ваша местность для отслеживания погоды.</h1>
@@ -90,11 +90,7 @@
         {% endfor %}
     </div>
 </div>
-{% else %}
-<div class="main-weather-info" style="text-align: center;">
-    <h1 style="color: red; font-size: 50px;">Произошла ошибка</h1>
-</div>
-{% endif %}
+
 
 {% endblock %}
 

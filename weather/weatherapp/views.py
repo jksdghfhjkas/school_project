@@ -161,8 +161,7 @@ def Weather_login_get(request):
     return render(request, 'weatherapp/main.html', {'form': form,
                                                     'form_del': form_del,
                                                     'yandex': INFO_SITY['yandex'],
-                                                    'openweather': INFO_SITY['openweather'],
-                                                    'error': INFO_SITY['Error']})
+                                                    'openweather': INFO_SITY['openweather']})
 
 def main(request):
 
