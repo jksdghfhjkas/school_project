@@ -1,24 +1,15 @@
+#django
 from django.shortcuts import render, redirect
-import requests
 from django.contrib.auth.decorators import login_required
 from . import models
-from django.db.models import Q
 from . import forms
-from colorama import Fore
-from django.contrib.auth.models import User
 
+#parsing
+import requests
 import json
 import asyncio
 import aiohttp
-
 from datetime import date
-from translate import Translator
-
-from time import time
-
-
-def Print(string):
-    print(Fore.GREEN + str(string) + Fore.WHITE)
 
 
 GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/direct?q={}&appid=" + 'ae503a9e809c10ec2d6a2fdda6737a49'
@@ -90,10 +81,12 @@ async def Parser_Weather(session, coord, header, url, source, name_sity, functio
                 if name_sity == None: name_sity = f'lat: {coord[0]}, lon: {coord[1]}'
 
                 function(source, name_sity, response_json, coord) #функция разбора данных
-        
+            
             else: 
-                print(Fore.RED + str(response.status) + Fore.WHITE)
-    except: INFO_SITY['Error'] = False
+                print(str(response.status))
+    except:
+        print('Error')
+    
 
 async def Start_Parser(coordinates, name_sity, transcript):
 
@@ -170,16 +163,23 @@ def main(request):
         INFO_SITY['openweather'].clear()
 
     if request.method == 'POST':
+
+        if INFO_SITY['openweather'] != None:
+            INFO_SITY['yandex'].clear()
+            INFO_SITY['openweather'].clear()
         
         if request.POST.get('NameSity') != None:
             sity = request.POST.get('NameSity')
-            response = requests.get(GEOCODE_URL.format(sity)).text
-            response_json = json.loads(response)
+            response = requests.get(GEOCODE_URL.format(sity))
 
-            coord = [response_json[0]['lat'],
-                     response_json[0]['lon']]
+            if response.status_code == 200 and response.text != '[]':
 
-            asyncio.run(Start_Parser([coord], [sity], Transcript))
+                response_json = json.loads(response.text)
+
+                coord = [response_json[0]['lat'],
+                        response_json[0]['lon']]
+
+                asyncio.run(Start_Parser([coord], [sity], Transcript))
 
         elif request.POST.get('lat') != '' and request.POST.get('lon') != '': 
 
@@ -243,7 +243,7 @@ def Forecast_Parser(coordinate, namesity):
         Transcript_forecast(response_json, namesity)
     
     else: 
-        print(Fore.RED + str(response.status_code) + Fore.WHITE)
+        print(str(response.status_code))
 
 def forecast(request):
 
@@ -258,16 +258,14 @@ def forecast(request):
         if sity != None:
 
             response = requests.get(GEOCODE_URL.format(sity))
-            if response.status_code == 200:
+            if response.status_code == 200 and response.text != '[]':
 
                 response_json = json.loads(response.text)
 
                 coord = [response_json[0]['lat'],
                         response_json[0]['lon']]
                 
-                start = time()
                 Forecast_Parser(coord, sity)
-                Print(time() - start)
 
         elif lat != None and long != None:
             Forecast_Parser([lat, long], None)
