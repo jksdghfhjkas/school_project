@@ -7,87 +7,49 @@ from time import ctime, time
 
 import asyncio
 import aiohttp
+from translate import Translator
 
-GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/direct?q={}&appid=" + 'ae503a9e809c10ec2d6a2fdda6737a49'
-
-HEADERS = [{'X-Yandex-API-Key': 'f9d5d3ab-ebde-4d39-8070-3e6f5ab81e8c'}, None]
-
-URLS = ['https://api.weather.yandex.ru/v2/informers?lat={}&lon={}&lang=ru_RU', 
-        'https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid=' + 'ae503a9e809c10ec2d6a2fdda6737a49' + '&units=metric']
-
-SOURSE = ['Yandex api', 'OpenWeather api']
-
-INFO_SITY = {'yandex': [], 'openweather': []}
-
-
-def Test_transcript(source, name_sity, response_json, coord):
-    print(source, '\n', str(response_json), '\n\n\n')
-
-def Transcript(source, name_sity, response_json, coord):
-    if source == "Yandex api":
-        
-        INFO_SITY['yandex'].append({
-            'city': name_sity,
-            'temp': response_json['fact']['temp'],
-            'date': ctime(),
-            'image': 'http://127.0.0.1:8000/static/weatherapp/img/yandex_icon/{}.png'.format(response_json['fact']['icon']),
-            'lat_lon': f"{coord[0]}, {coord[1]}"
-        })
-
-    elif source == "OpenWeather api":
-
-        INFO_SITY['openweather'].append({
-            'city': name_sity,
-            'temp': response_json['main']['temp'],
-            'date': ctime(),
-            'image': response_json['weather'][0]['icon'],
-            'lat_lon': f"{coord[0]}, {coord[1]}"
-            
-        })
+ForeCast_URL = 'https://api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&appid=' + 'ae503a9e809c10ec2d6a2fdda6737a49' + '&units=metric&lang=ru'
+INFO = []
+TRANSLATOR = Translator(to_lang="Russian")
 
 
 
-async def Parser_Weather(session, coord, header, url, source, name_sity, function):
 
-    async with session.get(url.format(*coord), proxy=None, headers=header) as response:
-        if response.status == 200:
-            response_json = json.loads(await response.text())
-            if name_sity == None: name_sity = f'lat: {coord[0]}, lon: {coord[1]}'
-            function(source, name_sity, response_json, coord) #функция разбора данных
+async def Transcript_forecast(response_json, name_sity, Slice):
+    global INFO, TRANSLATOR
+    print(str(response_json))
+
+
+    # for value in response_json[Slice]:
+    #     INFO.append({
+    #         'sity': name_sity,
+    #         'temp': value['main']['temp'],
+    #         'image': value['weather'][0]['icon'],
+    #         'wind' : value['wind']['speed'],
+    #         'cloud' : value['weather'][0]['main'],
+    #         'date': value['dt_txt']
+
+    #     })
+
+async def Start_Transcript_forecast(response_json, name_sity):
+    set_task = []
+    for count in range(0, 41, 10):
+        # set_task.append(asyncio.create_task(Transcript_forecast(response_json['list'], name_sity, slice(count - 10, count))))
+        set_task.append(Transcript_forecast(response_json['list'], name_sity, slice(count - 10, count)))
+    await asyncio.gather(*set_task)
+
+def Forecast_Parser(coordinate, namesity):
+    response = requests.get(ForeCast_URL.format(*coordinate))
+    if response.status_code == 200:
+        response_json = json.loads(response.text)
+        if namesity == None: namesity = f'lat: {coordinate[0]}, long: {coordinate[1]}'
+        asyncio.run(Start_Transcript_forecast(response_json, namesity))
     
-        else: 
-            print(Fore.RED + str(response.status) + Fore.WHITE)
-            
-
-# async def Start_Parser(coordinates, name_sity, transcript):
-
-#     weather_task = []
-
-#     async with aiohttp.ClientSession() as session:
-#         for num, coord in enumerate(coordinates):
-#             weather_task += [asyncio.create_task(Parser_Weather(session, 
-#                                                 coord, 
-#                                                 header=HEADERS[i], 
-#                                                 url=URLS[i], 
-#                                                 source=SOURSE[i], 
-#                                                 name_sity=name_sity[num], 
-#                                                 function=transcript)) for i in range(0, 2)]
-
-            
-#         await asyncio.gather(*weather_task)
-
-async def Start_Parser(coordinates, name_sity, transcript):
-    
-    async with aiohttp.ClientSession() as session:
-        await asyncio.gather(asyncio.create_task(Parser_Weather(session, 
-                                                                coord=coordinates,
-                                                                header=None,
-                                                                url=URLS[1],
-                                                                source=SOURSE[1],
-                                                                name_sity=None,
-                                                                function=Test_transcript)))
+    else: 
+        print(Fore.RED + str(response.status_code) + Fore.WHITE)
 
 
-asyncio.run(Start_Parser([[1, 1], [1, 1]], [None, None], Test_transcript))
-
-
+Forecast_Parser([1, 1], None)
+print(Fore.GREEN + str(INFO) + Fore.WHITE)
+print(len(INFO))

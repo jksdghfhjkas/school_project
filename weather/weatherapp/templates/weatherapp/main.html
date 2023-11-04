@@ -1,53 +1,123 @@
 {% extends 'weatherapp/index.html' %}
+{% load static %}
+
+{% block style_link %}
+<link rel="stylesheet" href="{% static 'weatherapp/css/personal_area_style.css' %}">
+{% endblock style_link %}
+
+{% block fone-img %}
+<img class="background-img" src="{% static 'weatherapp/img/height.png' %}" alt="">
+{% endblock %}
 
 {% block content %}
 
-<h1>Следить за погодой</h1>
-<form method="POST">
-    {% csrf_token %}
-    {{form.NameSity}}
-    <button type="submit" class="button-sity-form">Найти</button>
-</form>
+<div class="top-main-title">
+    <div class="main-title">
 
-<h1 style="text-align: center; color: green;">Погода сегодня</h1>
+        <h1>Следите за погодой</h1>
 
-<div style="column-count: 2;">
-
-    <div>
-        <h1>OpenWeatherMap</h1>
-    
-        {% for i in openweather %}
-    
-        <div>
-            <h1>{{ i.city }}</h1>
-            <h1>{{ i.temp }}</h1>
-            <img src="http://openweathermap.org/img/w/{{i.image}}.png" alt="">
-            <a href="{% url 'fore-open' i.city %}">Узнать на 5 дней</a>
+        <p style="margin-bottom: 20px;">Добавте населенный пункт для получения актуальных данных о погоде.</p>
+        
+        <p>Выберете сервис:</p>
+        <div class="weather-servis">
+            <span class="open-weather active">Openweathermap</span>
+            <span class="yandex">Яндекс погода</span>
         </div>
-    
-        {% endfor %}
-    
+
+        <form method="POST">
+            {% csrf_token %}
+            <p>Название:</p>
+            {{form.NameSity}}
+            <button type="submit" name="add" value="True" class="button-sity-form">найти</button>
+        </form>
     </div>
     
-    <div>
-        <h1>Yandex Weather</h1>
-    
-        {% for i in yandex %}
-    
-        <div>
-            <h1>{{ i.city }}</h1>
-            <h1>{{ i.temp }}</h1>
-            <img style="background: black;" src="{{ i.image }}" alt="">
-        </div>
-    
-        {% endfor %}
-    
-    </div>
+    <div class="main-title" >
+        <h1>Удаление записей</h1>
 
+        <p>Удалите населенный пункт из отслеживаемых</p>
+
+        <form method="POST" style="margin-top: 20px;">
+            {% csrf_token %}
+            <p>Запись:</p>
+            {{form_del.record}}
+            <button type="submit" name="del" value="True" class="button-sity-form">Удалить</button>
+        </form>
+
+    </div>
 </div>
 
+{% if not error %}
+<div class="main-weather-info">
 
+    <h1 class="title">Ваша местность для отслеживания погоды.</h1>
 
+    <div class="broshure-openweather active">
+        {% for info in openweather %}
+            <div class="broshure-info">
+                <div>
+                    <h1 class="name-sity">{{info.city}}</h1>
+                    <img src="http://openweathermap.org/img/w/{{info.image}}.png" alt="">
+                </div>
+                <p>{{info.temp}}°</p>
+                <p>{{info.cloud}}</p>
+                <p style="margin-bottom: 10px;">{{info.wind}} м/с</p>
+                <a href="{% url 'forecast' %}?sity={{info.city}}">на 5 дней</a>
+            </div>
+        {% empty %}
+            <div style="width: 100%; background: white;">
+                <h1 style="color: rgba(255, 0, 0, 0.429)">Добавте местность</h1>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="broshure-yandex">
+        {% for info in yandex %}
+            <div class="broshure-info">
+                <div>
+                    <h1 class="name-sity">{{info.city}}</h1>
+                    <img src="https://yastatic.net/weather/i/icons/funky/dark/{{info.image}}.svg" alt="">
+                </div>
+                <h1>{{info.temp}}°</h1>
+                <p>{{info.cloud}}</p>
+                <p style="margin-bottom: 10px;">{{info.wind}} м/с</p>
+                <a href="{% url 'forecast' %}?sity={{info.city}}">на 5 дней</a>
+            </div>
+        {% empty %}
+            <div style="width: 100%; background: white;">
+                <h1 style="color: rgba(255, 0, 0, 0.429)">Добавте местность или yandex заблокировал api</h1>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="main-weather-info" style="text-align: center;">
+    <h1 style="color: red; font-size: 50px;">Произошла ошибка</h1>
+</div>
+{% endif %}
 
+{% endblock %}
 
+{% block javascript %}
+<script>
+    let openweather = document.querySelector('.open-weather');
+    let yandex = document.querySelector('.yandex');
+
+    let broshure_openweather = document.querySelector('.broshure-openweather');
+    let broshure_yandex = document.querySelector('.broshure-yandex');
+
+    openweather.addEventListener('click', function(){
+        broshure_yandex.classList.remove('active');
+        broshure_openweather.classList.add('active');
+        openweather.classList.add('active');
+        yandex.classList.remove('active');
+    });
+
+    yandex.addEventListener('click', function(){
+        broshure_openweather.classList.remove('active');
+        broshure_yandex.classList.add('active');
+        openweather.classList.remove('active');
+        yandex.classList.add('active');
+    });
+</script>
 {% endblock %}

@@ -60,7 +60,7 @@
         <div class="bottom-info">
             <h1>{{i.cloud}}</h1>
             <p>{{i.wind}}м/с | ветер</p>
-            <p></p>
+            <a href="{% url 'forecast' %}?sity={{i.city}}">прогноз на 5 дней</a>
         </div>
 
         {% empty %}
@@ -74,7 +74,8 @@
         {% for i in info_yandex %}
         <div class="top-info">
             <p>{{i.city}}</p>
-            <img src="{{i.image}}" alt="">
+            <!-- <img src="{{i.image}}" alt=""> -->
+            <img src="https://yastatic.net/weather/i/icons/funky/dark/{{i.image}}.svg" alt="">
         </div>
         
         <div class="center-info">
@@ -85,7 +86,7 @@
         <div class="bottom-info">
             <h1>{{i.cloud}}</h1>
             <p>{{i.wind}}м/с | ветер</p>
-            <p></p>
+            <a href="{% url 'forecast' %}?sity={{i.city}}">прогноз на 5 дней</a>
         </div>
 
         {% empty %}

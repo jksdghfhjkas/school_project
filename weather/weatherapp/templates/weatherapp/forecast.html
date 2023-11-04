@@ -10,26 +10,53 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="form-main">
-    <form method="GET">
-        <p>Введите название:</p>
-        <input type="text" name="sity">
-        <button type="submit">Поиск</button>
-    </form>
-    
-    <form method="GET">
-        <p>Введите координаты:</p>
-        <input type="number" value="lat" name="lat">
-        <input type="number" value="long" name="long">
-        <button type="submit">Поиск</button>
-    </form>
+
+    <h1>Прогноз погоды на 5 дней</h1>
+
+    <div>
+        <form method="GET">
+            <p>Введите название:</p>
+            <input type="text" name="sity">
+            <button type="submit">Поиск</button>
+        </form>
+        
+        <form method="GET">
+            <p>Введите координаты:</p>
+            <input type="number" value="lat" name="lat">
+            <input type="number" value="long" name="long">
+            <button type="submit">Поиск</button>
+        </form>
+    </div>
+
 </div>
 
+<div class="forecast-info-main">
+    {% for obj_day in info.days %}
+        
+        <div class="broshure-forecast">
+            <h1>{{obj_day.day}} {{obj_day.mount}}</h1>
+            <div class="broshure-forecast-flex"> 
+                {% for obj_info in info.info %}
+                    {% if obj_day.day == obj_info.day %}
+                        <div class="forecast-info">
+                            <img src="http://openweathermap.org/img/w/{{obj_info.image}}.png" alt="">
+                            <p>{{obj_info.temp}}°</p>
+                            <p>{{obj_info.cloud}}</p>
+                            <div style="border: none">
+                                <p style="padding: 0; font-size: 16px; font-weight: 500;">Ветер:</p>
+                                <p>{{obj_info.wind}} м/с</p>
+                            </div>
+                            
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
 
-{% for i in info %}
-<p>{{i}}</p>
-{% empty %}
-<p>нет данных</p>
-{% endfor %}
+</div>
+
 
 {% endblock %}

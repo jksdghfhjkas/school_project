@@ -1,8 +1,31 @@
 {% extends 'weatherapp/index.html' %}
+{% load static %}
+
+{% block style_link %}
+<link rel="stylesheet" href="{% static 'userlogin/login.css' %}">
+
+<style>
+    .border-link li:nth-of-type(3) a{
+        border-bottom: none;
+        color: black;
+    }
+
+    .border-link li:nth-of-type(4) a{
+        border-bottom: 2px solid rgba(255, 153, 0, 0.546);
+        color: rgba(255, 153, 0, 0.546);
+    }
+</style>
+
+{% endblock %}
+
+{% block fone-img %}
+<img class="background-img" src="{% static 'weatherapp/img/height.png' %}" alt="">
+{% endblock %}
 
 {% block content %}
 
 <form method="POST" class="login-form">
+    <h1>Регистрация</h1>
     {% csrf_token %}
    
     {{ form }}

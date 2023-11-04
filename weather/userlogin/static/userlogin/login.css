@@ -54,6 +54,7 @@
     border-radius: 20px;
 }
 
+.login-form button:after,
 .login-form button:hover {
     color: white;
     background: rgba(255, 153, 0, 0.546);
@@ -62,4 +63,17 @@
 .login-form button:focus {
     background: rgb(210, 134, 4);
     transition: 0s;
+}
+
+@media screen and (max-width: 500px) {
+    .login-form {
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+
+    .login-form input,
+    .login-form button {
+        width: 100%;
+    }
 }

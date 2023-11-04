@@ -23,11 +23,18 @@
             <img src="" alt="" class="icon">
             <h1><span style="color: rgba(255, 153, 0, 0.546);">Your</span>Weather</h1>
 
-            <nav>
+            <div class="menu_btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <nav class="phones-style">
                 <ul class="border-link">
                     <li><a href="{% url 'one_page' %}">на сегодня</a></li>
                     <li><a href="{% url 'forecast' %}">на 5 дней</a></li>
-                    <li><a href="{% url 'login' %}">Войти</a></li>
+                    <li><a href="{% url 'main' %}">Войти</a></li>
+                    <li><a href="{% url 'registr' %}">Регистрация</a></li>
                 </ul>
             </nav>
         </header>
@@ -38,13 +45,25 @@
         
         <footer>
             <ul>
-                <li>Создатель | Еремеев Антон Сергеевич</li>
-                <li>Руководитель | Савинова Наталья Владимировна</li>
+                <li>Создатель: <span>Еремеев Антон Сергеевич</span></li>
+                <li>Руководитель: <span>Савинова Наталья Владимировна</span></li>
                 <li><a href="#">Ссылка на github проекта</a></li>
             </ul>
         </footer>
 
     </div>
     {% block javascript %}{% endblock %}
+
+    <script>
+        let menu_btn = document.querySelector('.menu_btn');
+        let menu = document.querySelector('.border-link');
+        let nav = document.querySelector('.phones-style')
+
+        menu_btn.addEventListener('click', function(){
+	        menu_btn.classList.toggle('active');
+	        menu.classList.toggle('active');
+            nav.classList.toggle('active');
+        })
+    </script>
 </body>
 </html>

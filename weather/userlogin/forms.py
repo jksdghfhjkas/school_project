@@ -5,10 +5,10 @@ from django.contrib.auth.forms import UserCreationForm
 
 class UserRegisterForm(UserCreationForm):
     
-    email = forms.EmailField(label="Email", widget=forms.EmailInput(attrs={'class': "form-input"}))
-    password1 = forms.CharField(label="Password1", widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-    password2 = forms.CharField(label='Password2', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-    username = forms.CharField(label="Username", widget=forms.TextInput(attrs={'class': 'form-input'}))
+    email = forms.EmailField(label="Почта", widget=forms.EmailInput(attrs={'class': "form-input"}))
+    password1 = forms.CharField(label="Пароль", widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+    password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+    username = forms.CharField(label="Имя", widget=forms.TextInput(attrs={'class': 'form-input'}))
 
     class Meta:
         model = User

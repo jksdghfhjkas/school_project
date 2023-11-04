@@ -168,7 +168,64 @@
     font-weight: 600;
     text-align: center;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
+
+.bottom-info{
+    text-align: center;
+}
+
+.bottom-info a {
+    font-size: 20px;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.386);
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.bottom-info a:hover {
+    background: rgba(255, 153, 0, 0.546);
+}
+
+@media screen and (max-width: 500px) {
+    .content-main {
+        display: block;
+    }
+    .content-one {
+        text-align: center;
+        width: 100%;
+    }
+    .content-main div {
+       margin: 0;
+    }
+    .weather-servis {
+        display: flex;
+        flex-direction: column;
+    }
+    .form-one {
+        margin-top: 20px;
+    }
+    .weather-servis span {
+        width: 100%;
+    }
+    .broshure-yandex.active,
+    .broshure-openweather.active {
+        display: block;
+        width: 100%;
+        margin: 0;
+        margin-top: 20px;
+        background: rgba(0, 0, 0, 0.08);
+        height: 500px;
+    }
+    .servis-name {
+        margin-bottom: 20px;
+    }
+    .content-one-header {
+        margin-top: 80px;
+    }
+}
+
+
 
 
 

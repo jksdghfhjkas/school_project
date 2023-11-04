@@ -2,34 +2,24 @@ import requests
 import asyncio
 import json
 import aiohttp
-from time import time
+from time import time, sleep
 
-URL = 'https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=' + 'ae503a9e809c10ec2d6a2fdda6737a49'
-USER_SITY = []
+async def wrapper():
+    await asyncio.sleep(10)
 
-async def Request_Get_Weather(city, session):
-    async with session.get(URL.format(city), proxy=None) as response:
-        response_json = json.loads(await response.text())
-        
-        if response_json['cod'] != '404':
-            print(response_json)
-            # USER_SITY.append({
-            #     'city': city,
-            #     'temp': response_json['main']['temp'],
-            #     'image': response_json['weather'][0]['icon']
-            # })
+async def main(count):
+    print(f'start: {count}')
+    await sleep(10)
+    print(f'stop: {count}')
 
-async def Request_User_Weather(cityes):
-    city_tasks = []
-    async with aiohttp.ClientSession() as session:
-        for city in cityes:
-            city_tasks.append(asyncio.create_task(Request_Get_Weather(city, session)))
-        await asyncio.gather(*city_tasks)
+async def start():
+    task = []
+    for count in range(10):
+        task.append(asyncio.create_task(main(count)))
+    await asyncio.wait(task)
 
+# asyncio.run(start())
 
-sities = ['london', 'london']
-
-for i in range(10):
-    time_st = time()
-    asyncio.run(Request_User_Weather(sities))
-    print(time_st - time())
+from datetime import date
+today = date.today()
+print(today)
