@@ -12,12 +12,12 @@ import aiohttp
 from datetime import date
 
 
-GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/direct?q={}&appid=" + 'ae503a9e809c10ec2d6a2fdda6737a49'
+GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/direct?q={}&appid=" + 'token_api_openweather'
 
-HEADERS = [{'X-Yandex-API-Key': 'f9d5d3ab-ebde-4d39-8070-3e6f5ab81e8c'}, None]
+HEADERS = [{'X-Yandex-API-Key': 'token_api_yandex'}, None]
 
 URLS = ['https://api.weather.yandex.ru/v2/informers?lat={}&lon={}&lang=ru_RU', 
-        'https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid=' + 'f2319986030c77f8d17c87999e88be66' + '&units=metric&lang=ru']
+        'https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid=' + 'token_api_openweather' + '&units=metric&lang=ru']
 
 SOURSE = ['Yandex api', 'OpenWeather api']
 
